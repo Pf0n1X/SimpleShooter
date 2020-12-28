@@ -3,6 +3,7 @@
 
 #include "ShooterCharacter.h"
 #include "Components/InputComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Gun.h"
 
 class UInputComponent;
@@ -21,6 +22,9 @@ void AShooterCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
+	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
+	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
+	Gun->SetOwner(this);
 }
 
 // Called every frame
